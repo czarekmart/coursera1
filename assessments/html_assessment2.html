@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dating Website</title>
+    <style>
+        fieldset {
+            border: 10px solid yellow;
+            background-color: lightyellow;
+            width: 720px;
+            margin-bottom: 10px;
+        }
+        label {
+            display: inline-block;
+            width: 180px;
+            text-align: right;
+            vertical-align: top;
+        }
+        #preview {
+            display: none;
+        }
+        span.slider {
+            width: 60px;
+            display: inline-block;
+            text-align: center;
+            color: lightgoldenrodyellow;
+            vertical-align: top;
+        }
+        span.min {
+            background-color: maroon;
+        }
+        span.max {
+            background-color: darkmagenta;
+        }
+        span.checkLabel {
+            width: auto;
+        }
+        /* add some extra spacing between the controls */
+        div.control {
+            margin-bottom: 4px;
+        }
+
+     </style>
+</head>
+<body>
+
+    <h2>Please Enter Your Details For Our Dating Website!</h2>
+    <form action="http://ihome.ust.hk/~rossiter/cgi-bin/show_everything.php"
+          enctype="multipart/form-data"
+          method="post">
+        <fieldset>
+            <legend>Your Face</legend>
+            <div class="control">
+                <label for="avatar">Your image:</label>
+                <input type="file" id="avatar" name="avatar" required>
+            </div>
+            <br>
+            <div class="control">
+                <label for="preview">Image preview:</label>
+                <img src="" width="300px" id="preview">
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Your General Details</legend>
+            <div class="control">
+                <label for="fullName">Name:</label>
+                <input type="text" id="fullName" name="fullName" required placeholder="Your full name">
+            </div>
+            <div class="control">
+                <label for="male">Gender:</label>
+
+                <input type="radio" name="gender" id="male" value="male" checked required>
+                <span class="checkLabel">Male</span>
+
+                <input type="radio" name="gender" value="female">
+                <span class="checkLabel">Female</span>
+            </div>
+            <div class="control">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <div class="control">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" >
+            </div>
+            <div class="control">
+                <label for="favColor">Favorite Color:</label>
+                <input type="color" name="favColor" id="favColor" required>
+            </div>
+            <div class="control">
+                <label for="country">Which country:</label>
+                <select id="country" name="country">
+                    <option value="">no selection</option>
+                    <option value="USA">USA</option>
+                    <option value="CA">Canada</option>
+                    <option value="MEX">Mexico</option>
+                    <option value="FRA">France</option>
+                    <option value="ESP">Spain</option>
+                </select>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Your Indicators</legend>
+            <div class="control">
+                <label for="height">Height:</label>
+                <span class="min slider">Short</span>
+                <input id="height" name="height" type="range" min="0" max="100" value="50">
+                <span class="max slider">Tall</span>
+            </div>
+            <div class="control">
+                <label for="salary">Salary:</label>
+                <span class="min slider">Poor</span>
+                <input id="salary" name="salary" type="range" min="0" max="100" value="50">
+                <span class="max slider">Rich</span>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Your Contact Information</legend>
+            <div class="control">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="control">
+                <label for="mobile">Mobile:</label>
+                <input type="tel" id="mobile" name="mobile" >
+            </div>
+            <div class="control">
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" rows="4" cols="60" placeholder="Your address here" ></textarea>
+            </div>
+            <div class="control">
+                <label for="contactEmail">Method to contact you: </label>
+
+                <input type="checkbox" id="contactEmail" name="contactMethod" value="email">
+                <span class="checkLabel">Email</span>
+
+                <input type="checkbox" name="contactMethod" value="whatsapp">
+                <span class="checkLabel">Whatsapp</span>
+
+                <input type="checkbox" name="contactMethod" value="chat">
+                <span class="checkLabel">In-app chat</span>
+            </div>
+        </fieldset>
+        <div>
+            <input type="submit" value="Submit">
+        </div>
+
+    </form>
+
+    <script>
+        var img = document.getElementById("avatar").onchange = function(evt){
+            var imgPath = URL.createObjectURL(evt.target.files[0]);
+            if ( imgPath ) {
+                var imgElement = document.getElementById("preview");
+                imgElement.setAttribute("src", imgPath);
+                imgElement.style.display = "inline-block";
+            }
+        };
+    </script>
+</body>
+</html>
