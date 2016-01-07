@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+    <title>JavaScript Color Guessing Game</title>
+</head>
+<body onload="do_game()">
+<script>
+
+    var target;
+    var target_index;
+    var guess_input;
+    var finished = false;
+    var guesses = 0;
+    var cancelled = false;
+    var colors;
+    var colorsLowercase = [];
+    colors = [
+        "Aqua",
+        "Aquamarine",
+        "Azure",
+        "Beige",
+        "Bisque",
+        "Blue",
+        "Brown",
+        "CadetBlue",
+        "Chartreuse",
+        "Chocolate",
+        "Coral",
+        "Crimson",
+        "Cyan",
+        "DarkBlue",
+        "DarkCyan",
+        "DarkGray",
+        "DarkGrey",
+        "DarkGreen",
+        "DarkKhaki",
+        "DarkMagenta",
+        "DarkOliveGreen",
+        "DarkOrange",
+        "DarkOrchid",
+        "DarkRed",
+        "DarkSalmon",
+        "DarkSeaGreen",
+        "DarkSlateBlue",
+        "DarkViolet",
+        "DeepPink",
+        "DeepSkyBlue",
+        "DimGray",
+        "DimGrey",
+        "DodgerBlue",
+        "FireBrick"
+    ];
+
+    function do_game() {
+        for(var i in colors) {
+            colorsLowercase.push(colors[i].toLowerCase());
+        }
+
+        target_index = Math.floor(Math.random() * colors.length);
+        target = colors[target_index];
+        alert("I am thinking of color " + target +
+                "\n\nPlease memorize it.");
+
+        while (!finished && !cancelled) {
+            guess_input = prompt("I am thinking of one of the following colors:\n"+
+                    colors.join(", ") +
+                    "\n\nWhat color am I thinking of?\n");
+            if ( guess_input == null ) {
+                cancelled = true;
+            }
+            else {
+                guess_input = guess_input.toLowerCase();
+                guesses += 1;
+                finished = check_guess();
+            }
+        }
+    }
+
+    function check_guess() {
+        var guess_index = colorsLowercase.indexOf(guess_input);
+        if (guess_index < 0) {
+            alert("Sorry, I don't recognize your color: " + guess_input + ".\n\n" +
+                    "Please try again.");
+            return false;
+        }
+        if (guess_input > target.toLowerCase()) {
+            alert("Sorry, your guess is not correct!\n\nHint: Your color is alphabetically higher than mine!\n\nPlease try again.");
+            return false;
+        }
+        if (guess_input < target.toLowerCase()) {
+            alert("Sorry, your guess is not correct!\n\nHint: Your color is alphabetically lower than mine!\n\nPlease try again.");
+            return false;
+        }
+        (document.getElementsByTagName("body")[0]).style.background = target;
+        alert("Congratulations! You have guessed the color!\n\nIt took you " + guesses + " guesses to get finish the game!\n\n" +
+            "You can see the color in the background.");
+        return true;
+    }
+
+</script>
+</body>
+</html>
