@@ -30,8 +30,6 @@
         "Cyan",
         "DarkBlue",
         "DarkCyan",
-        "DarkGray",
-        "DarkGrey",
         "DarkGreen",
         "DarkKhaki",
         "DarkMagenta",
@@ -45,13 +43,15 @@
         "DarkViolet",
         "DeepPink",
         "DeepSkyBlue",
-        "DimGray",
-        "DimGrey",
         "DodgerBlue",
         "FireBrick"
     ];
 
     function do_game() {
+
+        // The camelCase colors are for display for the user as they look better.
+        // For internal processing use the lowercase version so that the user input
+        // is not case sensitive.
         for(var i in colors) {
             colorsLowercase.push(colors[i].toLowerCase());
         }

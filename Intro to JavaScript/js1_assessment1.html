@@ -12,76 +12,68 @@
     var finished = false;
     var guesses = 0;
     var cancelled = false;
+    var colors;
+    var colorsLowercase = [];
+    colors = [
+        "Aqua",
+        "Aquamarine",
+        "Azure",
+        "Beige",
+        "Bisque",
+        "Blue",
+        "Brown",
+        "CadetBlue",
+        "Chartreuse",
+        "Chocolate",
+        "Coral",
+        "Crimson",
+        "Cyan",
+        "DarkBlue",
+        "DarkCyan",
+        "DarkGreen",
+        "DarkKhaki",
+        "DarkMagenta",
+        "DarkOliveGreen",
+        "DarkOrange",
+        "DarkOrchid",
+        "DarkRed",
+        "DarkSalmon",
+        "DarkSeaGreen",
+        "DarkSlateBlue",
+        "DarkViolet",
+        "DeepPink",
+        "DeepSkyBlue",
+        "DodgerBlue",
+        "FireBrick"
+    ];
 
     function do_game() {
-        colors = [
-            "AliceBlue",
-            "AntiqueWhite",
-            "Aqua",
-            "Aquamarine",
-            "Azure",
-            "Beige",
-            "Bisque",
-            "Black",
-            "BlanchedAlmond",
-            "Blue",
-            "BlueViolet",
-            "Brown",
-            "BurlyWood",
-            "CadetBlue",
-            "Chartreuse",
-            "Chocolate",
-            "Coral",
-            "CornflowerBlue",
-            "Cornsilk",
-            "Crimson",
-            "Cyan",
-            "DarkBlue",
-            "DarkCyan",
-        ];
+
+        // The camelCase colors are for display for the user as they look better.
+        // For internal processing use the lowercase version so that the user input
+        // is not case sensitive.
+        for(var i in colors) {
+            colorsLowercase.push(colors[i].toLowerCase());
+        }
 
         target_index = Math.floor(Math.random() * colors.length);
         target = colors[target_index];
         alert("I am thinking of color " + target +
-            "\n\nPlease memorize it.");
+                "\n\nPlease memorize it.");
 
         while (!finished && !cancelled) {
             guess_input = prompt("I am thinking of one of the following colors:\n"+
                     colors.join(", ") +
-                    "\n\nWhat color am I thinking of?\n" +
-                    "(Your input must be case sensitive)");
+                    "\n\nWhat color am I thinking of?\n");
             if ( guess_input == null ) {
                 cancelled = true;
             }
             else {
+                guess_input = guess_input.toLowerCase();
                 guesses += 1;
-                finished = guess_input == target;
+                finished = (guess_input == target.toLowerCase());
             }
         }
-    }
-
-    function check_guess() {
-        if (!colors.contains(guess_input)) {
-            alert("I don't recognize your input: " + guess_input + ".\n" +
-                    "Please try again.");
-            return false;
-        }
-        if ((guess_input != target)) {
-            alert("Please enter an integer number in the range 1 to 100.");
-            return false;
-        }
-        if (guess_input > target) {
-            alert("Your number is too large!");
-            return false;
-        }
-        if (guess_input < target) {
-            alert("Your number is too small!");
-            return false;
-        }
-        alert("You got it! The number was " + target +
-                ".\n\nIt took you " + guesses +
-                " guesses to get the number!");
-        return true;
     }
 
 </script>
