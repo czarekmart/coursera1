@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<p>Mama</p>
+Baba
+<div>
+    <table>
+        <thead>
+        <th>Column 1</th>
+        <th>Column 2</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Row 11</td>
+            <td>Row 12</td>
+        </tr>
+        <tr>
+            <td>Row 21</td>
+            <td><a href="http://www.fox.com">Fox</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<footer>GAga</footer>
+<script>
+    function clickHandler(event) {
+        event.stopPropagation();
+
+        var element = event.target;
+        var path = element.nodeName;
+        while(element.parentNode) {
+            element = element.parentNode;
+            path = element.nodeName + " > " + path;
+        }
+        alert(path);
+    }
+    function attachHandler(node) {
+        if(node) {
+            node.onclick = clickHandler;
+            for(index in node.childNodes) {
+                var childNode = node.childNodes[index];
+                attachHandler(childNode);
+            }
+        }
+    }
+    attachHandler(document);
+</script>
+</body>
+</html>
