@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matching Game Step 3</title>
+    <style>
+        p, h3 {
+            margin: 10px 0 0 20px;
+            padding: 0;
+        }
+        div.gamePane {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+        }
+        #leftSide {
+            top:80px;
+            left: 10px;
+        }
+        #rightSide {
+            top:80px;
+            left: 510px;
+            border-left: 1px solid;
+        }
+        img {
+            position: absolute;
+        }
+    </style>
+</head>
+<body onload="generateFaces(5)">
+
+    <h3>Matching Game</h3>
+    <p>Click on the extra smiling face on the left.</p>
+
+    <div class="gamePane" id="leftSide">
+    </div>
+    <div class="gamePane" id="rightSide"></div>
+
+    <script>
+
+        var imageWidth = 100;
+        function generateRandomImagePosition(img)
+        {
+            // the div size is 500x500, so we have 500-imageSize pixels available
+            var availableSize = 500 - imageWidth;
+            img.style.top = (Math.floor(Math.random() * availableSize)) + "px";
+            img.style.left = (Math.floor(Math.random() * availableSize)) + "px";
+            return img;
+        }
+        function generateFaces(numberOfFaces) {
+            var leftSide = document.getElementById("leftSide");
+            // generate remaining images
+            var firstImg;
+            for ( var index = 0; index < numberOfFaces; index++) {
+                var img;
+                if ( index == 0 ) {
+                    img = document.createElement("img");
+                    img.src = "http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+                    img.style.width = imageWidth + "px";
+                    firstImg = img;
+                }
+                else {
+                    img = firstImg.cloneNode(false);
+                }
+                leftSide.appendChild(generateRandomImagePosition(img));
+            }
+
+            // Now clone the images into the right pane
+            var divClone = leftSide.cloneNode(true);
+            // We must remove the id attribute as we cannot have two elements with same id "leftSide"
+            divClone.removeAttribute("id");
+
+            divClone.removeChild(divClone.lastChild);
+            document.getElementById("rightSide").appendChild(divClone);
+         }
+
+    </script>
+</body>
+</html>

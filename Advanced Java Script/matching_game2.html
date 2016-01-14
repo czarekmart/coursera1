@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matching Game Step 2</title>
+    <style>
+        p, h3 {
+            margin: 10px 0 0 20px;
+            padding: 0;
+        }
+        div.gamePane {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+        }
+        #leftSide {
+            top:80px;
+            left: 10px;
+        }
+        #rightSide {
+            top:80px;
+            left: 510px;
+            border-left: 1px solid;
+        }
+        img {
+            position: absolute;
+        }
+    </style>
+</head>
+<body onload="generateFaces(5)">
+
+    <h3>Matching Game</h3>
+    <p>Click on the extra smiling face on the left.</p>
+
+    <div class="gamePane" id="leftSide">
+    </div>
+    <div class="gamePane" id="rightSide"></div>
+
+    <script>
+
+        var imageWidth = 100;
+        function generateRandomImagePosition(img)
+        {
+            // the div size is 500x500, so we have 500-imageSize pixels available
+            var availableSize = 500 - imageWidth;
+            img.style.top = (Math.floor(Math.random() * availableSize)) + "px";
+            img.style.left = (Math.floor(Math.random() * availableSize)) + "px";
+            return img;
+        }
+        function generateFaces(numberOfFaces) {
+            var divLeft = document.getElementById("leftSide");
+            // generate remaining images
+            var firstImg;
+            for ( var index = 0; index < numberOfFaces; index++) {
+                var img;
+                if ( index == 0 ) {
+                    img = document.createElement("img");
+                    img.src = "http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+                    img.style.width = imageWidth + "px";
+                    firstImg = img;
+                }
+                else {
+                    img = firstImg.cloneNode(false);
+                }
+                divLeft.appendChild(generateRandomImagePosition(img));
+            }
+         }
+
+    </script>
+</body>
+</html>
