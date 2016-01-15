@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Matching Game Step 3</title>
+    <title>Matching Game Step 4</title>
     <style>
         p, h3 {
             margin: 10px 0 0 20px;
@@ -40,6 +40,11 @@
 
         var imageWidth = 100;
         var numberOfFaces = 5;
+        var smileTemplate;
+        var theBody = document.getElementsByTagName("body")[0];
+        var leftSide = document.getElementById("leftSide");
+        var rightSide = document.getElementById("rightSide");
+
         function generateRandomImagePosition(img)
         {
             // the div size is 500x500, so we have 500-imageSize pixels available
@@ -48,22 +53,25 @@
             img.style.left = (Math.floor(Math.random() * availableSize)) + "px";
             return img;
         }
+        function removeAllChildren(node){
+            while (node.firstChild) {
+                node.removeChild(node.firstChild);
+            }
+        }
         function generateFaces() {
-            var leftSide = document.getElementById("leftSide");
-            // generate remaining images
-            var firstImg;
-            for ( var index = 0; index < numberOfFaces; index++) {
-                var img;
-                if ( index == 0 ) {
-                    img = document.createElement("img");
-                    img.src = "http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
-                    img.style.width = imageWidth + "px";
-                    firstImg = img;
-                }
-                else {
-                    img = firstImg.cloneNode(false);
-                }
-                leftSide.appendChild(generateRandomImagePosition(img));
+
+            //-- clean up
+            removeAllChildren(leftSide);
+            removeAllChildren(rightSide);
+
+            // generate images
+             for ( var index = 0; index < numberOfFaces; index++) {
+                if ( !smileTemplate ) {
+                    smileTemplate = document.createElement("img");
+                    smileTemplate.src = "http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+                    smileTemplate.style.width = imageWidth + "px";
+                 }
+                 leftSide.appendChild(generateRandomImagePosition(smileTemplate.cloneNode(false)));
             }
 
             // Now clone the images into the right pane
@@ -72,8 +80,24 @@
             divClone.removeAttribute("id");
 
             divClone.removeChild(divClone.lastChild);
-            document.getElementById("rightSide").appendChild(divClone);
+            rightSide.appendChild(divClone);
+
+            // assign mouse click event
+            leftSide.lastChild.onclick = function nextLevel() {
+                event.stopPropagation();
+                numberOfFaces += 5;
+                generateFaces();
+            }
          }
+
+        theBody.onclick = function () {
+            alert("Game Over!");
+            theBody.onclick = null;
+            leftSide.lastChild.onclick = null;
+
+            // Show the user which smile was missed
+            leftSide.lastChild.style.border = "2px solid red";
+        };
 
     </script>
 </body>
